@@ -34,6 +34,7 @@ import com.pi4j.io.gpio.digital.DigitalState;
 import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.util.Console;
 import org.crac.Context;
+import org.crac.Core;
 import org.crac.Resource;
 
 /**
@@ -42,14 +43,7 @@ import org.crac.Resource;
  * @author Frank Delporte (<a href="https://www.webtechie.be">https://www.webtechie.be</a>)
  * @version $Id: $Id
  */
-public class MinimalExample implements Resource  {
-
-    private static final int PIN_BUTTON = 24; // PIN 18 = BCM 24
-    private static final int PIN_LED = 22; // PIN 15 = BCM 22
-
-    private static int pressCount = 0;
-    private static Console console;
-    private static com.pi4j.context.Context pi4j;
+public class MinimalExample {
 
     /**
      * This application blinks a led and counts the number the button is pressed. The blink speed increases with each
@@ -59,59 +53,17 @@ public class MinimalExample implements Resource  {
      * @throws java.lang.Exception if any.
      */
     public static void main(String[] args) throws Exception {
-        initPi4j();
+        var pi4jDemo = new Pi4JDemo();
 
-        // ------------------------------------------------------------
-        // Output Pi4J Context information
-        // ------------------------------------------------------------
-        // The created Pi4J Context initializes platforms, providers
-        // and the I/O registry. To help you to better understand this
-        // approach, we print out the info of these. This can be removed
-        // from your own application.
-        // OPTIONAL
-        PrintInfo.printLoadedPlatforms(console, pi4j);
-        PrintInfo.printDefaultPlatform(console, pi4j);
-        PrintInfo.printProviders(console, pi4j);
-
-        // Here we will create I/O interfaces for a (GPIO) digital output
-        // and input pin. We define the 'provider' to use PiGpio to control
-        // the GPIO.
-        var ledConfig = DigitalOutput.newConfigBuilder(pi4j)
-                .id("led")
-                .name("LED Flasher")
-                .address(PIN_LED)
-                .shutdown(DigitalState.LOW)
-                .initial(DigitalState.LOW)
-                .provider("pigpio-digital-output");
-        var led = pi4j.create(ledConfig);
-
-        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
-                .id("button")
-                .name("Press button")
-                .address(PIN_BUTTON)
-                .pull(PullResistance.PULL_DOWN)
-                .debounce(3000L)
-                .provider("pigpio-digital-input");
-        var button = pi4j.create(buttonConfig);
-        button.addListener(e -> {
-            if (e.state() == DigitalState.LOW) {
-                pressCount++;
-                console.println("Button was pressed for the " + pressCount + "th time");
-            }
-        });
-
-        // OPTIONAL: print the registry
-        PrintInfo.printRegistry(console, pi4j);
-
-        while (pressCount < 5) {
-            if (led.equals(DigitalState.HIGH)) {
-                console.println("LED low");
-                led.low();
+        while (pi4jDemo.getPressCount() < 5) {
+            if (pi4jDemo.getLed().equals(DigitalState.HIGH)) {
+                pi4jDemo.getConsole().println("LED low");
+                pi4jDemo.getLed().low();
             } else {
-                console.println("LED high");
-                led.high();
+                pi4jDemo.getConsole().println("LED high");
+                pi4jDemo.getLed().high();
             }
-            Thread.sleep(500 / (pressCount + 1));
+            Thread.sleep(500 / (pi4jDemo.getPressCount() + 1));
         }
 
         // ------------------------------------------------------------
@@ -126,24 +78,6 @@ public class MinimalExample implements Resource  {
         // is returned to the system.
 
         // Shutdown Pi4J
-        pi4j.shutdown();
-    }
-
-    @Override
-    public void beforeCheckpoint(Context<? extends Resource> context) throws Exception {
-        console.println("CRaC: beforeCheckpoint");
-        pi4j.shutdown();
-    }
-
-    @Override
-    public void afterRestore(Context<? extends Resource> context) throws Exception {
-        console.println("CRaC: afterRestore");
-        initPi4j();
-    }
-
-    private static void initPi4j() {
-        console = new Console();
-        pi4j = Pi4J.newAutoContext();
-        console.title("<-- The Pi4J Project -->", "Minimal Example project");
+        pi4jDemo.shutdown();
     }
 }
