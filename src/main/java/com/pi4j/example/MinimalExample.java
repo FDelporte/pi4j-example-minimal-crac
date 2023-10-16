@@ -59,9 +59,6 @@ public class MinimalExample implements Resource  {
      * @throws java.lang.Exception if any.
      */
     public static void main(String[] args) throws Exception {
-        // Print program title/header
-        console.title("<-- The Pi4J Project -->", "Minimal Example project");
-
         initPi4j();
 
         // ------------------------------------------------------------
@@ -147,5 +144,6 @@ public class MinimalExample implements Resource  {
     private static void initPi4j() {
         console = new Console();
         pi4j = Pi4J.newAutoContext();
+        console.title("<-- The Pi4J Project -->", "Minimal Example project");
     }
 }
