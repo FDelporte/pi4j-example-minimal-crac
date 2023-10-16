@@ -49,6 +49,7 @@ public class MinimalExample implements Resource  {
 
     private static int pressCount = 0;
     private static Console console;
+    private static com.pi4j.context.Context pi4j;
 
     /**
      * This application blinks a led and counts the number the button is pressed. The blink speed increases with each
@@ -58,40 +59,10 @@ public class MinimalExample implements Resource  {
      * @throws java.lang.Exception if any.
      */
     public static void main(String[] args) throws Exception {
-        // Create Pi4J console wrapper/helper
-        // (This is a utility class to abstract some of the boilerplate stdin/stdout code)
-        console = new Console();
-
         // Print program title/header
         console.title("<-- The Pi4J Project -->", "Minimal Example project");
 
-        // ************************************************************
-        //
-        // WELCOME TO Pi4J:
-        //
-        // Here we will use this getting started example to
-        // demonstrate the basic fundamentals of the Pi4J library.
-        //
-        // This example is to introduce you to the boilerplate
-        // logic and concepts required for all applications using
-        // the Pi4J library.  This example will do use some basic I/O.
-        // Check the pi4j-examples project to learn about all the I/O
-        // functions of Pi4J.
-        //
-        // ************************************************************
-
-        // ------------------------------------------------------------
-        // Initialize the Pi4J Runtime Context
-        // ------------------------------------------------------------
-        // Before you can use Pi4J you must initialize a new runtime
-        // context.
-        //
-        // The 'Pi4J' static class includes a few helper context
-        // creators for the most common use cases.  The 'newAutoContext()'
-        // method will automatically load all available Pi4J
-        // extensions found in the application's classpath which
-        // may include 'Platforms' and 'I/O Providers'
-        var pi4j = Pi4J.newAutoContext();
+        initPi4j();
 
         // ------------------------------------------------------------
         // Output Pi4J Context information
@@ -164,10 +135,17 @@ public class MinimalExample implements Resource  {
     @Override
     public void beforeCheckpoint(Context<? extends Resource> context) throws Exception {
         console.println("CRaC: beforeCheckpoint");
+        pi4j.shutdown();
     }
 
     @Override
     public void afterRestore(Context<? extends Resource> context) throws Exception {
         console.println("CRaC: afterRestore");
+        initPi4j();
+    }
+
+    private void initPi4j() {
+        console = new Console();
+        pi4j = Pi4J.newAutoContext();
     }
 }
