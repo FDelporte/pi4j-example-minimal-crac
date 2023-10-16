@@ -10,7 +10,7 @@ import org.crac.Context;
 import org.crac.Core;
 import org.crac.Resource;
 
-public class Pi4JDemo implements Resource {
+public class Pi4JService implements Resource {
 
     private static final int PIN_BUTTON = 24; // PIN 18 = BCM 24
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
@@ -22,7 +22,7 @@ public class Pi4JDemo implements Resource {
     private final DigitalOutput led;
     private final DigitalInput button;
 
-    public Pi4JDemo() {
+    public Pi4JService() {
         Core.getGlobalContext().register(this);
 
         initPi4j();
@@ -83,22 +83,17 @@ public class Pi4JDemo implements Resource {
         return pressCount;
     }
 
-    public void setLed(boolean state) {
-        if (!shuttingDown) {
-            if (state) {
-                led.high();
-            } else {
-                led.low();
-            }
+    public void toggleLed() {
+        if (shuttingDown) {
+            console.println("Can't change LED, shutting down...");
         }
-    }
-
-    public DigitalState getLedState() {
-        return led.state();
-    }
-
-    public Console getConsole() {
-        return console;
+        if (led.state().equals(DigitalState.HIGH)) {
+            console.println("Setting LED high");
+            led.high();
+        } else {
+            console.println("Setting LED low");
+            led.low();
+        }
     }
 
     public void shutdown() {
