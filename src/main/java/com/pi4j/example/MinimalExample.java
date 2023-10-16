@@ -56,7 +56,7 @@ public class MinimalExample {
         var pi4jDemo = new Pi4JDemo();
 
         while (pi4jDemo.getPressCount() < 5) {
-            if (pi4jDemo.getLed().equals(DigitalState.HIGH)) {
+            if (pi4jDemo.getLedState().equals(DigitalState.HIGH)) {
                 pi4jDemo.getConsole().println("LED low");
                 pi4jDemo.setLed(false);
             } else {

@@ -93,6 +93,10 @@ public class Pi4JDemo implements Resource {
         }
     }
 
+    public DigitalState getLedState() {
+        return led.state();
+    }
+
     public Console getConsole() {
         return console;
     }
