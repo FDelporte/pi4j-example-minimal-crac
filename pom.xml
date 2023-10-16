@@ -24,6 +24,7 @@
         <!-- DEPENDENCIES VERSIONS -->
         <slf4j.version>2.0.9</slf4j.version>
         <pi4j.version>2.3.0</pi4j.version>
+        <crac.version>1.4.0</crac.version>
 
         <!-- BUILD PLUGIN VERSIONS -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -75,6 +76,13 @@
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-plugin-pigpio</artifactId>
             <version>${pi4j.version}</version>
+        </dependency>
+
+        <!-- CRaC -->
+        <dependency>
+            <groupId>org.crac</groupId>
+            <artifactId>crac</artifactId>
+            <version>${crac.version}</version>
         </dependency>
     </dependencies>
 

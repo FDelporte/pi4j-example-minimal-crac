@@ -33,6 +33,8 @@ import com.pi4j.io.gpio.digital.DigitalOutput;
 import com.pi4j.io.gpio.digital.DigitalState;
 import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.util.Console;
+import org.crac.Context;
+import org.crac.Resource;
 
 /**
  * <p>This example fully describes the base usage of Pi4J by providing extensive comments in each step.</p>
@@ -40,12 +42,13 @@ import com.pi4j.util.Console;
  * @author Frank Delporte (<a href="https://www.webtechie.be">https://www.webtechie.be</a>)
  * @version $Id: $Id
  */
-public class MinimalExample {
+public class MinimalExample implements Resource  {
 
     private static final int PIN_BUTTON = 24; // PIN 18 = BCM 24
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
 
     private static int pressCount = 0;
+    private static Console console;
 
     /**
      * This application blinks a led and counts the number the button is pressed. The blink speed increases with each
@@ -57,7 +60,7 @@ public class MinimalExample {
     public static void main(String[] args) throws Exception {
         // Create Pi4J console wrapper/helper
         // (This is a utility class to abstract some of the boilerplate stdin/stdout code)
-        final var console = new Console();
+        console = new Console();
 
         // Print program title/header
         console.title("<-- The Pi4J Project -->", "Minimal Example project");
@@ -156,5 +159,15 @@ public class MinimalExample {
 
         // Shutdown Pi4J
         pi4j.shutdown();
+    }
+
+    @Override
+    public void beforeCheckpoint(Context<? extends Resource> context) throws Exception {
+        console.println("CRaC: beforeCheckpoint");
+    }
+
+    @Override
+    public void afterRestore(Context<? extends Resource> context) throws Exception {
+        console.println("CRaC: afterRestore");
     }
 }

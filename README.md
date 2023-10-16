@@ -26,15 +26,17 @@ $ cd pi4j-example-minimal-crac
 
 #### First Terminal
 
+This Pi4J application needs to be executed as sudo to have the needed privileges to interact with the GPIOs.
+
 ```bash
 $ mvn package
-$ java -XX:CRaCCheckpointTo=cr -jar target/pi4j-crac.jar
+$ sudo `which java` -XX:CRaCCheckpointTo=cr -jar target/pi4j-crac.jar
 ```
 
 #### Second Terminal
 
 ```bash
-$ jcmd target/example-jetty-1.0-SNAPSHOT.jar JDK.checkpoint
+$ sudo `which jcmd` target/pi4j-crac.jar JDK.checkpoint
 ```
 
 ### Start From Snapshot
