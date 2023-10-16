@@ -58,10 +58,10 @@ public class MinimalExample {
         while (pi4jDemo.getPressCount() < 5) {
             if (pi4jDemo.getLed().equals(DigitalState.HIGH)) {
                 pi4jDemo.getConsole().println("LED low");
-                pi4jDemo.getLed().low();
+                pi4jDemo.setLed(false);
             } else {
                 pi4jDemo.getConsole().println("LED high");
-                pi4jDemo.getLed().high();
+                pi4jDemo.setLed(true);
             }
             Thread.sleep(500 / (pi4jDemo.getPressCount() + 1));
         }

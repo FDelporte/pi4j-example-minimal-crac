@@ -16,6 +16,7 @@ public class Pi4JDemo implements Resource {
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
 
     private int pressCount = 0;
+    private boolean shuttingDown = false;
     private Console console;
     private com.pi4j.context.Context pi4j;
     private final DigitalOutput led;
@@ -54,6 +55,7 @@ public class Pi4JDemo implements Resource {
     @Override
     public void beforeCheckpoint(Context<? extends Resource> context) throws Exception {
         console.println("CRaC: beforeCheckpoint");
+        shuttingDown = true;
         shutdown();
     }
 
@@ -61,6 +63,7 @@ public class Pi4JDemo implements Resource {
     public void afterRestore(Context<? extends Resource> context) throws Exception {
         console.println("CRaC: afterRestore");
         initPi4j();
+        shuttingDown = false;
     }
 
     private void initPi4j() {
@@ -80,8 +83,14 @@ public class Pi4JDemo implements Resource {
         return pressCount;
     }
 
-    public DigitalOutput getLed() {
-        return led;
+    public void setLed(boolean state) {
+        if (!shuttingDown) {
+            if (state) {
+                led.high();
+            } else {
+                led.low();
+            }
+        }
     }
 
     public Console getConsole() {
