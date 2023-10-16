@@ -144,7 +144,7 @@ public class MinimalExample implements Resource  {
         initPi4j();
     }
 
-    private void initPi4j() {
+    private static void initPi4j() {
         console = new Console();
         pi4j = Pi4J.newAutoContext();
     }
