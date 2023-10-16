@@ -28,7 +28,7 @@ $ cd pi4j-example-minimal-crac
 
 ```bash
 $ mvn package
-$ java -XX:CRaCCheckpointTo=cr -jar target/example-jetty-1.0-SNAPSHOT.jar
+$ java -XX:CRaCCheckpointTo=cr -jar target/pi4j-crac.jar
 ```
 
 #### Second Terminal

@@ -12,8 +12,9 @@
 
     <!-- BUILD PROPERTIES -->
     <properties>
-        <!-- PROJECT ENCODING PROPERTIES -->
+        <!-- PROJECT PROPERTIES -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.class>com.pi4j.example.MinimalExample</main.class>
 
         <!-- JAVA COMPILER VERSIONS -->
         <java.version>11</java.version>
