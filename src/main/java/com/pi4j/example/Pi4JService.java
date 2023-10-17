@@ -98,6 +98,6 @@ public class Pi4JService implements Resource {
 
     public void shutdown() {
         console.println("Shutting Pi4J down");
-        pi4j.shutdown();
+        //pi4j.shutdown();
     }
 }
