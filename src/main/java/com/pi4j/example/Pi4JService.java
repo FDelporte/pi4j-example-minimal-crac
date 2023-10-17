@@ -19,15 +19,15 @@ public class Pi4JService implements Resource {
     private boolean shuttingDown = false;
     private Console console;
     private com.pi4j.context.Context pi4j;
-    private final DigitalOutput led;
-    private final DigitalInput button;
+    //private final DigitalOutput led;
+    //private final DigitalInput button;
 
     public Pi4JService() {
         Core.getGlobalContext().register(this);
 
         initPi4j();
 
-        var ledConfig = DigitalOutput.newConfigBuilder(pi4j)
+        /*var ledConfig = DigitalOutput.newConfigBuilder(pi4j)
                 .id("led")
                 .name("LED Flasher")
                 .address(PIN_LED)
@@ -49,7 +49,7 @@ public class Pi4JService implements Resource {
                 pressCount++;
                 console.println("Button was pressed for the " + pressCount + "th time");
             }
-        });
+        });*/
     }
 
     @Override
@@ -70,13 +70,13 @@ public class Pi4JService implements Resource {
         console = new Console();
         console.title("<-- The Pi4J Project -->", "Initializing Pi4J");
 
-        pi4j = Pi4J.newAutoContext();
+        //pi4j = Pi4J.newAutoContext();
 
-        PrintInfo.printLoadedPlatforms(console, pi4j);
-        PrintInfo.printDefaultPlatform(console, pi4j);
-        PrintInfo.printProviders(console, pi4j);
+        //PrintInfo.printLoadedPlatforms(console, pi4j);
+        //PrintInfo.printDefaultPlatform(console, pi4j);
+        //PrintInfo.printProviders(console, pi4j);
 
-        PrintInfo.printRegistry(console, pi4j);
+        //PrintInfo.printRegistry(console, pi4j);
     }
 
     public int getPressCount() {
@@ -87,13 +87,13 @@ public class Pi4JService implements Resource {
         if (shuttingDown) {
             console.println("Can't change LED, shutting down...");
         }
-        if (led.state().equals(DigitalState.HIGH)) {
+        /*if (led.state().equals(DigitalState.HIGH)) {
             console.println("Setting LED high");
             led.high();
         } else {
             console.println("Setting LED low");
             led.low();
-        }
+        }*/
     }
 
     public void shutdown() {
