@@ -66,11 +66,20 @@ public class Pi4JService implements Resource {
         shuttingDown = false;
     }
 
+    public void shutdown() throws InterruptedException {
+        console.println("Shutting Pi4J down");
+        shuttingDown = true;
+        pi4j.shutdown();
+        Thread.sleep(5000);
+    }
+
     private void initPi4j() {
         console = new Console();
         console.title("<-- The Pi4J Project -->", "Initializing Pi4J");
 
         pi4j = Pi4J.newAutoContext();
+
+        shuttingDown = false;
 
         PrintInfo.printLoadedPlatforms(console, pi4j);
         PrintInfo.printDefaultPlatform(console, pi4j);
@@ -87,18 +96,12 @@ public class Pi4JService implements Resource {
         if (shuttingDown) {
             console.println("Can't change LED, shutting down...");
         }
-        if (led.state().equals(DigitalState.HIGH)) {
+        if (led.state().equals(DigitalState.LOW)) {
             console.println("Setting LED high");
             led.high();
         } else {
             console.println("Setting LED low");
             led.low();
         }
-    }
-
-    public void shutdown() throws InterruptedException {
-        console.println("Shutting Pi4J down");
-        pi4j.shutdown();
-        Thread.sleep(5000);
     }
 }

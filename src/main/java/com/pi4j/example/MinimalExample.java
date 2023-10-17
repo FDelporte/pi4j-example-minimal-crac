@@ -10,13 +10,13 @@ public class MinimalExample {
      * @throws java.lang.Exception if any.
      */
     public static void main(String[] args) throws Exception {
-        var pi4j = new Pi4JService();
+        var pi4jDemo = new Pi4JService();
 
-        while (pi4j.getPressCount() < 5) {
-            pi4j.toggleLed();
-            Thread.sleep(500 / (pi4j.getPressCount() + 1));
+        while (pi4jDemo.getPressCount() < 5) {
+            pi4jDemo.toggleLed();
+            Thread.sleep(500 / (pi4jDemo.getPressCount() + 1));
         }
 
-        pi4j.shutdown();
+        pi4jDemo.shutdown();
     }
 }
