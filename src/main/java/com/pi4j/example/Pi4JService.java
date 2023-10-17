@@ -95,6 +95,7 @@ public class Pi4JService implements Resource {
     public void toggleLed() {
         if (shuttingDown) {
             console.println("Can't change LED, shutting down...");
+            return;
         }
         if (led.state().equals(DigitalState.LOW)) {
             console.println("Setting LED high");
