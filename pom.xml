@@ -23,7 +23,7 @@
 
         <!-- DEPENDENCIES VERSIONS -->
         <slf4j.version>2.0.9</slf4j.version>
-        <pi4j.version>2.3.0</pi4j.version>
+        <pi4j.version>2.3.0-SNAPSHOT</pi4j.version>
         <crac.version>1.4.0</crac.version>
 
         <!-- BUILD PLUGIN VERSIONS -->
