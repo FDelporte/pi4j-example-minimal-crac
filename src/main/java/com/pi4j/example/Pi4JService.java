@@ -96,8 +96,9 @@ public class Pi4JService implements Resource {
         }
     }
 
-    public void shutdown() {
+    public void shutdown() throws InterruptedException {
         console.println("Shutting Pi4J down");
         pi4j.shutdown();
+        Thread.sleep(5000);
     }
 }
