@@ -33,7 +33,7 @@ public class Pi4JService implements Resource {
                 .address(PIN_LED)
                 .shutdown(DigitalState.LOW)
                 .initial(DigitalState.LOW)
-                .provider("pigpio-digital-output");
+                .provider("linuxfs-digital-output");
         led = pi4j.create(ledConfig);
 
         var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
@@ -42,7 +42,7 @@ public class Pi4JService implements Resource {
                 .address(PIN_BUTTON)
                 .pull(PullResistance.PULL_DOWN)
                 .debounce(3000L)
-                .provider("pigpio-digital-input");
+                .provider("linuxfs-digital-input");
         button = pi4j.create(buttonConfig);
         button.addListener(e -> {
             if (e.state() == DigitalState.LOW) {
